@@ -10,7 +10,7 @@ export default function Videos() {
   if (isLoading) {
     content = (
       <>
-        {Array(12)
+        {Array(8)
           .fill(0)
           .map((a, b) => (
             <VideoLoader key={b} />

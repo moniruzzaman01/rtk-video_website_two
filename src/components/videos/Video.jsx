@@ -1,21 +1,24 @@
 import { Link } from "react-router-dom";
 import authorImage from "../../assets/author.png";
+import PropTypes from "prop-types";
 
-export default function Video() {
+export default function Video({ video }) {
+  const { title, author, thumbnail, views, duration, date } = video || {};
+
   return (
     <div className="col-span-12 sm:col-span-6 md:col-span-3 duration-300 hover:scale-[1.03]">
       <div className="w-full flex flex-col">
         <div className="relative">
           <Link to="/videos/1">
             <img
-              src="https://i3.ytimg.com/vi/6O4s7v28nlw/maxresdefault.jpg"
+              src={thumbnail}
               className="w-full h-auto"
               alt="Some video title"
             />
           </Link>
 
           <p className="absolute right-2 bottom-2 bg-gray-900 text-gray-100 text-xs px-1 py">
-            12:10
+            {duration}
           </p>
         </div>
 
@@ -28,17 +31,20 @@ export default function Video() {
 
           <div className="flex flex-col">
             <Link to="/videos/1">
-              <p className="text-slate-900 text-sm font-semibold">
-                Video title
-              </p>
+              <p className="text-slate-900 text-sm font-semibold">{title}</p>
             </Link>
             <span className="text-gray-400 text-xs hover:text-gray-600">
-              Learn with Sumit
+              {author}
             </span>
-            <p className="text-gray-400 text-xs">200 views . May 3, 2022</p>
+            <p className="text-gray-400 text-xs">
+              {views} views . {date}
+            </p>
           </div>
         </div>
       </div>
     </div>
   );
 }
+Video.propTypes = {
+  video: PropTypes.object,
+};
