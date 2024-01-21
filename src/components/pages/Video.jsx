@@ -6,6 +6,7 @@ import RelatedVideos from "../video/related/RelatedVideos";
 import DescriptionLoader from "../ui/loaders/DescriptionLoader";
 import PlayerLoader from "../ui/loaders/PlayerLoader";
 import Error from "../ui/Error";
+import RelatedVideoLoader from "../ui/loaders/RelatedVideoLoader";
 
 export default function Video() {
   const { videoId } = useParams();
@@ -37,7 +38,16 @@ export default function Video() {
             {content}
           </div>
 
-          <RelatedVideos />
+          {video?.id ? (
+            <RelatedVideos title={video.title} videoId={video.id} />
+          ) : (
+            <div>
+              <RelatedVideoLoader />
+              <RelatedVideoLoader />
+              <RelatedVideoLoader />
+              <RelatedVideoLoader />
+            </div>
+          )}
         </div>
       </div>
     </section>
