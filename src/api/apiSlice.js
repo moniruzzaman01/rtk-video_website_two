@@ -9,7 +9,10 @@ export const apiSlice = createApi({
     fetchAllVideos: builder.query({
       query: () => "/videos",
     }),
+    fetchAVideo: builder.query({
+      query: (videoId) => `/videos/${videoId}`,
+    }),
   }),
 });
 
-export const { useFetchAllVideosQuery } = apiSlice;
+export const { useFetchAllVideosQuery, useFetchAVideoQuery } = apiSlice;
