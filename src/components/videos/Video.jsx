@@ -30,7 +30,7 @@ export default function Video({ video }) {
           />
 
           <div className="flex flex-col">
-            <Link to="/videos/1">
+            <Link to={`/videos/${id}`}>
               <p className="text-slate-900 text-sm font-semibold">{title}</p>
             </Link>
             <span className="text-gray-400 text-xs hover:text-gray-600">

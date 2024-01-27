@@ -5,15 +5,18 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:9000",
   }),
-  tagTypes: ["videos"],
+  tagTypes: ["videos", "video"],
   endpoints: (builder) => ({
     fetchAllVideos: builder.query({
       query: () => "/videos",
       providesTags: ["videos"],
     }),
+
     fetchAVideo: builder.query({
       query: (videoId) => `/videos/${videoId}`,
+      providesTags: (result, error, arg) => [{ type: "video", id: arg }],
     }),
+
     fetchRelatedVideos: builder.query({
       query: ({ videoId, title }) => {
         const titleArray = title.split(" ");
@@ -22,7 +25,11 @@ export const apiSlice = createApi({
           .join("&");
         return `/videos?${queryString}&_limit=4&id_ne=${videoId}`;
       },
+      providesTags: (result, error, arg) => [
+        { type: "relatedVideos", id: arg.videoId },
+      ],
     }),
+
     addAVideo: builder.mutation({
       query: (data) => ({
         url: "/videos",
@@ -30,6 +37,19 @@ export const apiSlice = createApi({
         body: data,
       }),
       invalidatesTags: ["videos"],
+    }),
+
+    editAVideo: builder.mutation({
+      query: ({ videoId, data }) => ({
+        url: `videos/${videoId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        "videos",
+        { type: "video", id: arg.videoId },
+        { type: "relatedVideos", id: arg.videoId },
+      ],
     }),
   }),
 });
@@ -39,4 +59,5 @@ export const {
   useFetchAVideoQuery,
   useFetchRelatedVideosQuery,
   useAddAVideoMutation,
+  useEditAVideoMutation,
 } = apiSlice;
