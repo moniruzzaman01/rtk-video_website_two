@@ -37,16 +37,6 @@ export default function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log({
-    //   title,
-    //   author,
-    //   description,
-    //   link,
-    //   thumbnail,
-    //   date,
-    //   duration,
-    //   views,
-    // });
     editAVideo({
       videoId,
       data: {
